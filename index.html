@@ -5,62 +5,212 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ClipCutter - AI Shorts Studio</title>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0b0d13;--panel:#141824;--panel2:#1b2130;--text:#f4f5fb;--muted:#9299aa;--purple:#8565ff;--border:#292f40}
-body{background:var(--bg);color:var(--text);font-family:Arial,sans-serif;min-height:100vh}
+:root{
+ --bg:#0b0d13;
+ --panel:#141824;
+ --panel2:#1b2130;
+ --text:#f4f5fb;
+ --muted:#9299aa;
+ --purple:#8565ff;
+ --border:#292f40;
+}
+body{
+ background:var(--bg);
+ color:var(--text);
+ font-family:Arial,sans-serif;
+ min-height:100vh;
+}
 button,input,select{font:inherit}
 button{cursor:pointer;border:0}
 .app{max-width:1000px;margin:auto;padding:17px}
-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}
+header{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:25px;
+}
 .logo{font-size:25px;font-weight:800}
 .logo span{color:var(--purple)}
-.tag{font-size:10px;background:#302454;padding:5px 9px;border-radius:20px}
+.tag{
+ font-size:10px;
+ background:#302454;
+ padding:5px 9px;
+ border-radius:20px;
+}
 .hero{padding:20px 0}
-.hero h1{font-size:clamp(27px,5vw,42px);margin-bottom:10px}
+.hero h1{
+ font-size:clamp(27px,5vw,42px);
+ margin-bottom:10px;
+}
 .hero h1 span{color:#a48cff}
-.hero p,.sub{color:var(--muted);font-size:14px;line-height:1.6}
-.tabs{display:flex;gap:8px;overflow-x:auto;padding:8px 0 17px}
-.tab{white-space:nowrap;padding:11px 15px;border-radius:10px;background:var(--panel);color:var(--muted);border:1px solid var(--border)}
-.tab.active{background:#302454;color:white;border-color:var(--purple)}
-.panel{background:var(--panel);border:1px solid var(--border);border-radius:17px;padding:19px;margin-bottom:17px}
+.hero p,.sub{
+ color:var(--muted);
+ font-size:14px;
+ line-height:1.6;
+}
+.tabs{
+ display:flex;
+ gap:8px;
+ overflow-x:auto;
+ padding:8px 0 17px;
+}
+.tab{
+ white-space:nowrap;
+ padding:11px 15px;
+ border-radius:10px;
+ background:var(--panel);
+ color:var(--muted);
+ border:1px solid var(--border);
+}
+.tab.active{
+ background:#302454;
+ color:white;
+ border-color:var(--purple);
+}
+.panel{
+ background:var(--panel);
+ border:1px solid var(--border);
+ border-radius:17px;
+ padding:19px;
+ margin-bottom:17px;
+}
 .panel h2{font-size:19px;margin-bottom:8px}
 .sub{margin-bottom:17px}
-.import-grid,.editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
-.import-box{border:1px dashed #55516f;border-radius:14px;padding:23px 14px;text-align:center;background:#191b2a;display:flex;flex-direction:column;align-items:center;gap:10px}
+.import-grid,.editor-grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:13px;
+}
+.import-box{
+ border:1px dashed #55516f;
+ border-radius:14px;
+ padding:23px 14px;
+ text-align:center;
+ background:#191b2a;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ gap:10px;
+}
 .import-icon{font-size:30px}
 .import-box small{color:var(--muted)}
-.primary,.secondary{padding:12px 17px;border-radius:10px;font-weight:700}
-.primary{background:linear-gradient(110deg,var(--purple),#a05bdf);color:white}
-.secondary{background:var(--panel2);color:white;border:1px solid var(--border)}
-.url-row{display:flex;gap:9px;margin-top:15px}
-.url-row input,.field input,.field select{width:100%;min-width:0;background:#0e111a;border:1px solid var(--border);border-radius:9px;padding:12px;color:white}
+.primary,.secondary{
+ padding:12px 17px;
+ border-radius:10px;
+ font-weight:700;
+}
+.primary{
+ background:linear-gradient(110deg,var(--purple),#a05bdf);
+ color:white;
+}
+.secondary{
+ background:var(--panel2);
+ color:white;
+ border:1px solid var(--border);
+}
+.url-row{
+ display:flex;
+ gap:9px;
+ margin-top:15px;
+}
+.url-row input,.field input,.field select{
+ width:100%;
+ min-width:0;
+ background:#0e111a;
+ border:1px solid var(--border);
+ border-radius:9px;
+ padding:12px;
+ color:white;
+}
 .url-row input{flex:1}
-video,iframe{width:100%;max-height:420px;aspect-ratio:16/9;background:#050608;border:0;border-radius:12px;margin-top:15px}
+video,iframe{
+ width:100%;
+ max-height:420px;
+ aspect-ratio:16/9;
+ background:#050608;
+ border:0;
+ border-radius:12px;
+ margin-top:15px;
+}
 .hidden{display:none!important}
-.status{font-size:13px;color:#bcb0ff;margin-top:11px;line-height:1.5}
-.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.tool{background:var(--panel2);border:1px solid var(--border);border-radius:13px;padding:17px;text-align:left;color:white}
-.tool .emoji{font-size:25px;display:block;margin-bottom:12px}
+.status{
+ font-size:13px;
+ color:#bcb0ff;
+ margin-top:11px;
+ line-height:1.5;
+ overflow-wrap:anywhere;
+}
+.tools{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:12px;
+}
+.tool{
+ background:var(--panel2);
+ border:1px solid var(--border);
+ border-radius:13px;
+ padding:17px;
+ text-align:left;
+ color:white;
+}
+.tool .emoji{
+ font-size:25px;
+ display:block;
+ margin-bottom:12px;
+}
 .tool strong{display:block;margin-bottom:7px}
 .tool small{color:var(--muted);line-height:1.5}
-.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}
-.range-info{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:10px}
+.field label{
+ display:block;
+ font-size:13px;
+ color:var(--muted);
+ margin-bottom:8px;
+}
+.range-info{
+ display:flex;
+ justify-content:space-between;
+ color:var(--muted);
+ font-size:12px;
+ margin-top:10px;
+}
 .project-list{display:grid;gap:10px}
-.project{padding:14px;background:var(--panel2);border-radius:10px}
-.project small{display:block;color:var(--muted);margin-top:5px}
-.note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:14px}
-footer{text-align:center;color:#70788a;font-size:11px;padding:20px}
+.project{
+ padding:14px;
+ background:var(--panel2);
+ border-radius:10px;
+}
+.project small{
+ display:block;
+ color:var(--muted);
+ margin-top:5px;
+}
+.note{
+ font-size:12px;
+ color:var(--muted);
+ line-height:1.6;
+ margin-top:14px;
+}
+footer{
+ text-align:center;
+ color:#70788a;
+ font-size:11px;
+ padding:20px;
+}
 @media(max-width:650px){
-.app{padding:14px}
-.import-grid,.editor-grid,.tools{grid-template-columns:1fr}
-.url-row{flex-direction:column}
-.url-row button{width:100%}
+ .app{padding:14px}
+ .import-grid,.editor-grid,.tools{grid-template-columns:1fr}
+ .url-row{flex-direction:column}
+ .url-row button{width:100%}
 }
 </style>
 </head>
+
 <body>
 <div class="app">
+
 <header>
  <div class="logo">✂ Clip<span>Cutter</span> <span class="tag">STUDIO</span></div>
  <div style="color:var(--muted);font-size:12px">AI Shorts Creator</div>
@@ -68,7 +218,7 @@ footer{text-align:center;color:#70788a;font-size:11px;padding:20px}
 
 <section class="hero">
  <h1>Turn long videos into <span>short clips.</span></h1>
- <p>Import a video, preview YouTube content and create short-form videos.</p>
+ <p>Import videos, preview YouTube content and create short-form videos.</p>
 </section>
 
 <nav class="tabs">
@@ -78,159 +228,229 @@ footer{text-align:center;color:#70788a;font-size:11px;padding:20px}
  <button class="tab" data-tab="projects">▣ My Projects</button>
 </nav>
 
+<!-- HOME -->
 <section id="home" class="page">
- <div class="panel">
-  <h2>Import your video</h2>
-  <p class="sub">Upload your video or paste a YouTube URL.</p>
 
-  <div class="import-grid">
-   <div class="import-box">
-    <div class="import-icon">📁</div>
-    <strong>Upload from device</strong>
-    <small>Choose a video from your gallery</small>
-    <button class="primary" onclick="document.getElementById('fileInput').click()">Choose Video</button>
-   </div>
-   <div class="import-box">
-    <div class="import-icon">▶️</div>
-    <strong>Import YouTube URL</strong>
-    <small>Preview a YouTube video</small>
-    <button class="secondary" onclick="document.getElementById('videoUrl').focus()">Paste YouTube URL</button>
-   </div>
+<div class="panel">
+ <h2>Import your video</h2>
+ <p class="sub">Upload a video or paste a YouTube URL.</p>
+
+ <div class="import-grid">
+
+  <div class="import-box">
+   <div class="import-icon">📁</div>
+   <strong>Upload from device</strong>
+   <small>Choose a video from your gallery</small>
+   <button class="primary" onclick="document.getElementById('fileInput').click()">Choose Video</button>
   </div>
 
-  <input id="fileInput" type="file" accept="video/*" class="hidden">
-
-  <div class="url-row">
-   <input id="videoUrl" type="url" placeholder="Paste YouTube URL here">
-   <button class="primary" id="urlBtn">Import URL</button>
+  <div class="import-box">
+   <div class="import-icon">▶️</div>
+   <strong>Import YouTube URL</strong>
+   <small>Preview a video or playlist</small>
+   <button class="secondary" onclick="document.getElementById('videoUrl').focus()">Paste YouTube URL</button>
   </div>
 
-  <div id="status" class="status">Choose a video or paste a YouTube link.</div>
-
-  <video id="preview" class="hidden" controls playsinline></video>
-  <iframe id="youtubePreview" class="hidden"
-   title="YouTube video preview"
-   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-   allowfullscreen></iframe>
-
-  <div id="videoActions" class="hidden" style="display:flex;gap:9px;flex-wrap:wrap;margin-top:13px">
-   <button class="primary" onclick="goTab('auto')">✦ Auto Clipping</button>
-   <button class="secondary" onclick="goTab('manual')">✂ Manual Editor</button>
-   <button class="secondary" onclick="saveProject()">Save Project</button>
-  </div>
  </div>
 
- <div class="panel">
-  <h2>Choose your workflow</h2>
-  <p class="sub">Select how you want to edit your video.</p>
-  <div class="tools">
-   <button class="tool" onclick="goTab('auto')"><span class="emoji">✨</span><strong>Automatic AI Clipping</strong><small>AI highlight detection setup.</small></button>
-   <button class="tool" onclick="goTab('manual')"><span class="emoji">🎬</span><strong>Manual Editor</strong><small>Trim and export your uploaded video.</small></button>
-   <button class="tool" onclick="goTab('projects')"><span class="emoji">📂</span><strong>My Projects</strong><small>Your saved project details.</small></button>
-  </div>
+ <input id="fileInput" type="file" accept="video/*" class="hidden">
+
+ <div class="url-row">
+  <input id="videoUrl" type="url" placeholder="Paste YouTube video or playlist URL">
+  <button class="primary" id="urlBtn">Import URL</button>
  </div>
+
+ <div id="status" class="status">Choose a video or paste a YouTube link.</div>
+
+ <video id="preview" class="hidden" controls playsinline></video>
+
+ <iframe id="youtubePreview" class="hidden"
+  title="YouTube preview"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen></iframe>
+
+ <div id="videoActions" class="hidden" style="display:flex;gap:9px;flex-wrap:wrap;margin-top:13px">
+  <button class="primary" onclick="goTab('auto')">✦ Auto Clipping</button>
+  <button class="secondary" onclick="goTab('manual')">✂ Manual Editor</button>
+  <button class="secondary" onclick="saveProject()">Save Project</button>
+ </div>
+
+</div>
+
+<div class="panel">
+ <h2>Choose your workflow</h2>
+ <p class="sub">Select how you want to edit your video.</p>
+
+ <div class="tools">
+
+  <button class="tool" onclick="goTab('auto')">
+   <span class="emoji">✨</span>
+   <strong>Automatic AI Clipping</strong>
+   <small>AI highlight detection setup.</small>
+  </button>
+
+  <button class="tool" onclick="goTab('manual')">
+   <span class="emoji">🎬</span>
+   <strong>Manual Editor</strong>
+   <small>Trim and export your video.</small>
+  </button>
+
+  <button class="tool" onclick="goTab('projects')">
+   <span class="emoji">📂</span>
+   <strong>My Projects</strong>
+   <small>Your saved project details.</small>
+  </button>
+
+ </div>
+</div>
 </section>
 
+<!-- AUTO CLIPPING -->
 <section id="auto" class="page hidden">
- <div class="panel">
-  <h2>✨ Automatic AI Clipping</h2>
-  <p class="sub">Prepare your video for AI highlight detection.</p>
-  <div id="autoVideoStatus" class="status">Import a video first.</div>
+<div class="panel">
 
-  <div class="editor-grid" style="margin-top:18px">
-   <div class="field">
-    <label>Clip format</label>
-    <select id="autoRatio">
-     <option value="9:16">9:16 — Reels / Shorts</option>
-     <option value="16:9">16:9 — Landscape</option>
-     <option value="1:1">1:1 — Square</option>
-    </select>
-   </div>
-   <div class="field">
-    <label>Clip length</label>
-    <select id="clipLength">
-     <option>15–30 seconds</option>
-     <option>30–60 seconds</option>
-     <option>60–90 seconds</option>
-    </select>
-   </div>
+ <h2>✨ Automatic AI Clipping</h2>
+ <p class="sub">Prepare your video for AI highlight detection.</p>
+
+ <div id="autoVideoStatus" class="status">Import a video first.</div>
+
+ <div class="editor-grid" style="margin-top:18px">
+
+  <div class="field">
+   <label>Clip format</label>
+   <select id="autoRatio">
+    <option value="9:16">9:16 — Reels / Shorts</option>
+    <option value="16:9">16:9 — Landscape</option>
+    <option value="1:1">1:1 — Square</option>
+   </select>
   </div>
 
-  <button class="primary" style="margin-top:17px" onclick="findHighlights()">Find Highlights</button>
-  <div id="highlightStatus" class="status"></div>
-  <p class="note">AI highlight generation is not connected yet. YouTube preview alone does not provide a downloadable video file.</p>
+  <div class="field">
+   <label>Clip length</label>
+   <select id="clipLength">
+    <option>15–30 seconds</option>
+    <option>30–60 seconds</option>
+    <option>60–90 seconds</option>
+   </select>
+  </div>
+
  </div>
+
+ <button class="primary" style="margin-top:17px" onclick="findHighlights()">Find Highlights</button>
+
+ <div id="highlightStatus" class="status"></div>
+
+ <p class="note">
+ AI highlight generation backend is not connected yet.
+ YouTube preview does not provide a downloadable video file.
+ </p>
+
+</div>
 </section>
 
+<!-- MANUAL EDITOR -->
 <section id="manual" class="page hidden">
- <div class="panel">
-  <h2>✂ Manual Editor</h2>
-  <p class="sub">Set the section you want to trim from your uploaded video.</p>
-  <div id="manualStatus" class="status">Import a video first.</div>
-  <video id="editorPreview" class="hidden" controls playsinline></video>
+<div class="panel">
 
-  <div class="editor-grid" style="margin-top:18px">
-   <div class="field">
-    <label>Start time (seconds)</label>
-    <input id="startTime" type="number" min="0" value="0" step="0.1">
-   </div>
-   <div class="field">
-    <label>End time (seconds)</label>
-    <input id="endTime" type="number" min="0" value="5" step="0.1">
-   </div>
+ <h2>✂ Manual Editor</h2>
+ <p class="sub">Set the section you want to trim from your uploaded video.</p>
+
+ <div id="manualStatus" class="status">Import a video first.</div>
+
+ <video id="editorPreview" class="hidden" controls playsinline></video>
+
+ <div class="editor-grid" style="margin-top:18px">
+
+  <div class="field">
+   <label>Start time (seconds)</label>
+   <input id="startTime" type="number" min="0" value="0" step="0.1">
   </div>
 
-  <div class="range-info">
-   <span>Set your trim points</span>
-   <span id="durationLabel">Duration: --</span>
+  <div class="field">
+   <label>End time (seconds)</label>
+   <input id="endTime" type="number" min="0" value="5" step="0.1">
   </div>
 
-  <button class="secondary" style="margin-top:15px" onclick="previewStart()">Preview from start point</button>
-  <button class="primary" style="margin-top:15px" id="exportBtn" onclick="trimAndExport()">Export Trimmed MP4</button>
-  <div id="exportStatus" class="status"></div>
-  <p class="note">YouTube embedded videos cannot be exported through this editor. Upload your own video file or a video you have permission to edit.</p>
  </div>
 
- <div class="panel">
-  <h2>More editing tools</h2>
-  <div class="tools">
-   <div class="tool"><span class="emoji">💬</span><strong>Auto Captions</strong><small>Speech-to-text connection pending.</small></div>
-   <div class="tool"><span class="emoji">🔤</span><strong>Text & Titles</strong><small>Text overlay editor coming next.</small></div>
-   <div class="tool"><span class="emoji">🎨</span><strong>Caption Styles</strong><small>Animated templates coming next.</small></div>
+ <div class="range-info">
+  <span>Set your trim points</span>
+  <span id="durationLabel">Duration: --</span>
+ </div>
+
+ <button class="secondary" style="margin-top:15px" onclick="previewStart()">Preview from start point</button>
+
+ <button class="primary" style="margin-top:15px" id="exportBtn" onclick="trimAndExport()">Export Trimmed MP4</button>
+
+ <div id="exportStatus" class="status"></div>
+
+ <p class="note">
+ YouTube embedded videos cannot be exported through this editor.
+ Upload your own video or a video you have permission to edit.
+ </p>
+
+</div>
+
+<div class="panel">
+ <h2>More editing tools</h2>
+
+ <div class="tools">
+  <div class="tool">
+   <span class="emoji">💬</span>
+   <strong>Auto Captions</strong>
+   <small>Speech-to-text connection pending.</small>
+  </div>
+
+  <div class="tool">
+   <span class="emoji">🔤</span>
+   <strong>Text & Titles</strong>
+   <small>Text overlay editor coming next.</small>
+  </div>
+
+  <div class="tool">
+   <span class="emoji">🎨</span>
+   <strong>Caption Styles</strong>
+   <small>Animated templates coming next.</small>
   </div>
  </div>
+</div>
 </section>
 
+<!-- PROJECTS -->
 <section id="projects" class="page hidden">
- <div class="panel">
-  <h2>📂 My Projects</h2>
-  <p class="sub">Projects saved on this device.</p>
-  <div id="projectList" class="project-list"></div>
- </div>
+<div class="panel">
+ <h2>📂 My Projects</h2>
+ <p class="sub">Projects saved on this device.</p>
+ <div id="projectList" class="project-list"></div>
+</div>
 </section>
 
 <footer>ClipCutter Studio · Create. Edit. Share.</footer>
 </div>
 
 <script>
-const API_BASE = "https://clipcutter-backend-1duq.onrender.com";
+const API_BASE="https://clipcutter-backend-1duq.onrender.com";
 
-let currentVideo = "";
-let currentName = "";
-let currentFile = null;
-let localVideoUrl = "";
+let currentVideo="";
+let currentName="";
+let currentFile=null;
+let localVideoUrl="";
 
-const fileInput = document.getElementById("fileInput");
-const preview = document.getElementById("preview");
-const editorPreview = document.getElementById("editorPreview");
-const youtubePreview = document.getElementById("youtubePreview");
-const statusBox = document.getElementById("status");
+const fileInput=document.getElementById("fileInput");
+const preview=document.getElementById("preview");
+const editorPreview=document.getElementById("editorPreview");
+const youtubePreview=document.getElementById("youtubePreview");
+const statusBox=document.getElementById("status");
 
 function goTab(tab){
  document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
  document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+
  document.getElementById(tab).classList.remove("hidden");
- document.querySelector('[data-tab="'+tab+'"]').classList.add("active");
+
+ const tabButton=document.querySelector('[data-tab="'+tab+'"]');
+ if(tabButton) tabButton.classList.add("active");
+
  if(tab==="projects") renderProjects();
  updateVideoStatus();
 }
@@ -244,127 +464,214 @@ function showActions(){
 }
 
 function loadLocalVideo(file){
+
  if(localVideoUrl) URL.revokeObjectURL(localVideoUrl);
- localVideoUrl = URL.createObjectURL(file);
- currentVideo = localVideoUrl;
- currentName = file.name;
- currentFile = file;
+
+ localVideoUrl=URL.createObjectURL(file);
+ currentVideo=localVideoUrl;
+ currentName=file.name;
+ currentFile=file;
 
  youtubePreview.classList.add("hidden");
- youtubePreview.src = "";
+ youtubePreview.src="";
+
  preview.classList.remove("hidden");
  editorPreview.classList.remove("hidden");
 
- preview.src = localVideoUrl;
- editorPreview.src = localVideoUrl;
+ preview.src=localVideoUrl;
+ editorPreview.src=localVideoUrl;
 
- preview.onloadedmetadata = ()=>{
-  const duration = preview.duration;
-  document.getElementById("durationLabel").textContent =
-   Number.isFinite(duration) ? "Duration: "+duration.toFixed(1)+" sec" : "Duration: Unknown";
-  document.getElementById("endTime").value =
-   Number.isFinite(duration) ? Math.floor(duration) : 5;
+ preview.onloadedmetadata=()=>{
+  const duration=preview.duration;
+
+  document.getElementById("durationLabel").textContent=
+   Number.isFinite(duration)
+   ?"Duration: "+duration.toFixed(1)+" sec"
+   :"Duration: Unknown";
+
+  document.getElementById("endTime").value=
+   Number.isFinite(duration)?Math.floor(duration):5;
  };
 
- statusBox.textContent = "Video loaded: "+currentName;
- document.getElementById("manualStatus").textContent = "Ready: "+currentName;
+ statusBox.textContent="Video loaded: "+currentName;
+
+ document.getElementById("manualStatus").textContent=
+  "Ready: "+currentName;
+
  showActions();
  updateVideoStatus();
 }
 
 fileInput.addEventListener("change",e=>{
  const file=e.target.files[0];
- if(!file) return;
+ if(!file)return;
+
  if(!file.type.startsWith("video/")){
   statusBox.textContent="Please choose a valid video file.";
   return;
  }
+
  loadLocalVideo(file);
 });
 
-function getYouTubeId(value){
- try{
-  const url = new URL(value);
-  const host = url.hostname.replace(/^www\./,"").toLowerCase();
-  let id = "";
+/* YOUTUBE VIDEO + PLAYLIST URL SUPPORT */
 
-  if(host==="youtu.be"){
-   id=url.pathname.split("/").filter(Boolean)[0] || "";
-  }else if(host==="youtube.com" || host==="m.youtube.com" || host==="music.youtube.com"){
-   if(url.pathname==="/watch") id=url.searchParams.get("v") || "";
-   else if(url.pathname.startsWith("/shorts/")) id=url.pathname.split("/")[2] || "";
-   else if(url.pathname.startsWith("/embed/")) id=url.pathname.split("/")[2] || "";
-   else if(url.pathname.startsWith("/live/")) id=url.pathname.split("/")[2] || "";
+function getYouTubeLink(value){
+
+ try{
+  const url=new URL(value);
+
+  const host=url.hostname.replace(/^www\./,"").toLowerCase();
+
+  const allowedHosts=[
+   "youtube.com",
+   "m.youtube.com",
+   "music.youtube.com",
+   "youtu.be"
+  ];
+
+  if(!allowedHosts.includes(host))return null;
+
+  const list=url.searchParams.get("list");
+
+  if(list && /^[a-zA-Z0-9_-]+$/.test(list)){
+   return {
+    type:"playlist",
+    id:list
+   };
   }
 
-  return /^[a-zA-Z0-9_-]{11}$/.test(id) ? id : null;
+  let id="";
+
+  if(host==="youtu.be"){
+   id=url.pathname.split("/").filter(Boolean)[0]||"";
+  }
+  else if(url.pathname==="/watch"){
+   id=url.searchParams.get("v")||"";
+  }
+  else if(/^\/(shorts|embed|live)\//.test(url.pathname)){
+   id=url.pathname.split("/")[2]||"";
+  }
+
+  if(/^[a-zA-Z0-9_-]{11}$/.test(id)){
+   return {
+    type:"video",
+    id:id
+   };
+  }
+
+  return null;
+
  }catch(e){
   return null;
  }
 }
 
 document.getElementById("urlBtn").addEventListener("click",()=>{
+
  const url=document.getElementById("videoUrl").value.trim();
- if(!url){
-  statusBox.textContent="Please paste a YouTube URL first.";
+ const result=getYouTubeLink(url);
+
+ if(!result){
+  statusBox.textContent="Valid YouTube video ya playlist URL paste karo.";
   return;
  }
 
- const id=getYouTubeId(url);
- if(!id){
-  statusBox.textContent="Valid YouTube video URL nahi mila. Link check karo.";
-  return;
- }
-
- currentVideo="youtube:"+id;
- currentName="YouTube video";
+ currentVideo="youtube:"+result.id;
+ currentName=result.type==="playlist"?"YouTube Playlist":"YouTube Video";
  currentFile=null;
 
  preview.classList.add("hidden");
  editorPreview.classList.add("hidden");
+
  preview.pause();
+
  preview.removeAttribute("src");
  editorPreview.removeAttribute("src");
 
- youtubePreview.src="https://www.youtube-nocookie.com/embed/"+id;
+ if(result.type==="playlist"){
+
+  youtubePreview.src=
+   "https://www.youtube-nocookie.com/embed/videoseries?list="+
+   encodeURIComponent(result.id);
+
+  statusBox.textContent=
+   "YouTube playlist preview loaded. Playlist clips export abhi available nahi hai.";
+
+ }else{
+
+  youtubePreview.src=
+   "https://www.youtube-nocookie.com/embed/"+result.id;
+
+  statusBox.textContent=
+   "YouTube video preview loaded. Original video file is needed for MP4 export.";
+ }
+
  youtubePreview.classList.remove("hidden");
 
- statusBox.textContent="YouTube preview loaded. Original video file is needed for MP4 export.";
- document.getElementById("manualStatus").textContent="YouTube preview selected. Upload the source file to use Manual Editor.";
- document.getElementById("durationLabel").textContent="Duration: Use YouTube player";
+ document.getElementById("manualStatus").textContent=
+  "YouTube preview selected. Upload an authorized source video to edit and export.";
+
+ document.getElementById("durationLabel").textContent=
+  "Duration: Use YouTube player";
+
  showActions();
  updateVideoStatus();
 });
 
+/* VIDEO STATUS */
+
 function updateVideoStatus(){
- const message=currentVideo ? "Current source: "+currentName : "No video imported yet.";
+
+ const message=currentVideo
+  ?"Current source: "+currentName
+  :"No video imported yet.";
+
  document.getElementById("autoVideoStatus").textContent=message;
+
  if(!currentVideo){
   document.getElementById("manualStatus").textContent=message;
  }
 }
 
+/* MANUAL PREVIEW */
+
 function previewStart(){
+
  if(!currentFile){
   alert("Manual preview/export ke liye pehle original video file upload karo.");
   return;
  }
- const start=Math.max(0,Number(document.getElementById("startTime").value)||0);
- const end=Math.max(0,Number(document.getElementById("endTime").value)||0);
+
+ const start=Math.max(
+  0,
+  Number(document.getElementById("startTime").value)||0
+ );
+
+ const end=Math.max(
+  0,
+  Number(document.getElementById("endTime").value)||0
+ );
+
  if(end<=start){
   alert("End time must be greater than start time.");
   return;
  }
+
  editorPreview.currentTime=start;
  editorPreview.play().catch(()=>{});
 }
 
+/* MP4 EXPORT */
+
 async function trimAndExport(){
+
  const output=document.getElementById("exportStatus");
  const button=document.getElementById("exportBtn");
 
  if(!currentFile){
-  output.textContent="Please upload the original video file first. YouTube preview links cannot be exported here.";
+  output.textContent=
+   "Please upload the original video file first. YouTube preview links cannot be exported here.";
   return;
  }
 
@@ -381,7 +688,9 @@ async function trimAndExport(){
  output.textContent="Uploading video and preparing your clip. Please wait...";
 
  try{
+
   const form=new FormData();
+
   form.append("video",currentFile);
   form.append("start",String(start));
   form.append("end",String(end));
@@ -392,84 +701,132 @@ async function trimAndExport(){
   });
 
   if(!response.ok){
+
    let message="Video processing failed.";
+
    try{
     const data=await response.json();
-    message=data.error || message;
+    message=data.error||message;
    }catch(e){}
+
    throw new Error(message);
   }
 
   const blob=await response.blob();
   const downloadUrl=URL.createObjectURL(blob);
+
   const link=document.createElement("a");
   link.href=downloadUrl;
   link.download="clipcutter-export.mp4";
+
   document.body.appendChild(link);
   link.click();
   link.remove();
+
   setTimeout(()=>URL.revokeObjectURL(downloadUrl),30000);
 
   output.textContent="Your MP4 clip is ready.";
+
  }catch(error){
+
   output.textContent="Error: "+error.message+" Please try again.";
+
  }finally{
+
   button.disabled=false;
   button.textContent="Export Trimmed MP4";
  }
 }
 
+/* AI HIGHLIGHT SETUP */
+
 function findHighlights(){
+
  const box=document.getElementById("highlightStatus");
+
  if(!currentVideo){
   box.textContent="Please import a video first.";
   return;
  }
+
  if(currentVideo.startsWith("youtube:")){
-  box.textContent="YouTube preview ready. Upload the original video file that you own or have permission to edit for AI processing.";
+  box.textContent=
+   "YouTube preview ready. Upload the original video that you own or have permission to edit for processing.";
   return;
  }
- box.textContent="AI highlight detection backend is not connected yet. This feature is not generating clips yet.";
+
+ box.textContent=
+  "AI highlight detection backend is not connected yet. Automatic clips are not being generated yet.";
 }
 
+/* SAVE PROJECT */
+
 function saveProject(){
+
  if(!currentVideo){
   alert("Please import a video first.");
   return;
  }
 
- let projects=JSON.parse(localStorage.getItem("clipcutter_projects")||"[]");
+ let projects=JSON.parse(
+  localStorage.getItem("clipcutter_projects")||"[]"
+ );
+
  projects.unshift({
   name:currentName,
-  source:currentVideo.startsWith("youtube:")?"YouTube preview":"Uploaded video",
+  source:currentVideo.startsWith("youtube:")
+   ?"YouTube preview"
+   :"Uploaded video",
   date:new Date().toLocaleString(),
   format:document.getElementById("autoRatio").value
  });
- localStorage.setItem("clipcutter_projects",JSON.stringify(projects.slice(0,30)));
+
+ localStorage.setItem(
+  "clipcutter_projects",
+  JSON.stringify(projects.slice(0,30))
+ );
+
  alert("Project details saved on this device.");
 }
 
+/* SHOW PROJECTS */
+
 function renderProjects(){
+
  const box=document.getElementById("projectList");
- const projects=JSON.parse(localStorage.getItem("clipcutter_projects")||"[]");
+
+ const projects=JSON.parse(
+  localStorage.getItem("clipcutter_projects")||"[]"
+ );
+
+ box.innerHTML="";
 
  if(!projects.length){
-  box.innerHTML='<div class="empty">No saved projects yet. Import a video and tap Save Project.</div>';
+
+  box.innerHTML=
+   '<div class="project">No saved projects yet. Import a video and tap Save Project.</div>';
+
   return;
  }
 
- box.innerHTML="";
  projects.forEach(p=>{
+
   const item=document.createElement("div");
   item.className="project";
+
   const name=document.createElement("strong");
   name.textContent=p.name;
+
   const meta=document.createElement("small");
-  meta.textContent=(p.source||"Video")+" · "+p.date+" · "+p.format;
+
+  meta.textContent=
+   (p.source||"Video")+" · "+p.date+" · "+p.format;
+
   item.append(name,meta);
   box.append(item);
  });
 }
 </script>
+
 </body>
 </html>
