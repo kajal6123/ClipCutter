@@ -3,346 +3,181 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ClipCutter - AI Video Editor</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ClipCutter AI Studio</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{
- font-family:Arial,sans-serif;
- background:#101116;color:#fff;
- min-height:100vh;
-}
-header{
- padding:18px 16px;
- background:#191a23;
- display:flex;justify-content:space-between;
- align-items:center;position:sticky;top:0;z-index:5;
- border-bottom:1px solid #292a36;
-}
-.logo{font-size:23px;font-weight:800;color:#ff5c9a}
-.logo span{color:#fff}
-.container{max-width:950px;margin:auto;padding:18px}
-.tabs{
- display:grid;grid-template-columns:repeat(4,1fr);
- gap:8px;margin-bottom:20px
-}
-.tab{
- padding:12px 5px;border:1px solid #333;
- border-radius:10px;background:#1b1c26;
- color:#ddd;font-size:12px;cursor:pointer
-}
-.tab.active{background:#805eea;color:white;border-color:#805eea}
-.panel{
- background:#191a23;border:1px solid #2b2c38;
- border-radius:16px;padding:18px;margin-bottom:16px
-}
-h2{font-size:20px;margin-bottom:8px}
-h3{font-size:16px;margin-bottom:12px}
-p,.muted{color:#a8a8b7;font-size:13px;line-height:1.6}
-.section{display:none}
-.section.active{display:block}
-button{
- border:0;border-radius:10px;padding:12px 16px;
- background:#805eea;color:white;font-weight:700;
- cursor:pointer;margin:5px 3px 5px 0
-}
-button.secondary{background:#30313e}
-button.pink{background:#ff5c9a}
-button:disabled{opacity:.5;cursor:not-allowed}
-input,select,textarea{
- width:100%;padding:13px;margin:8px 0;
- border-radius:9px;border:1px solid #393a48;
- background:#101116;color:white;outline:none
-}
-input[type=file]{padding:10px}
-.video-box{
- background:#0b0c10;border:1px dashed #484957;
- border-radius:12px;padding:12px;margin:12px 0;
- text-align:center;min-height:100px
-}
-video{width:100%;max-height:400px;border-radius:10px}
-.status{
- background:#242532;border-radius:10px;padding:12px;
- margin:12px 0;font-size:13px;color:#ddd;
- white-space:pre-wrap;line-height:1.5
-}
-.clip{
- background:#242532;border:1px solid #393a48;
- padding:13px;border-radius:10px;margin:10px 0
-}
-.clip strong{display:block;margin-bottom:6px}
-.clip small{color:#aaa}
-.clip input{width:auto;margin-right:8px}
-.row{display:flex;gap:10px;flex-wrap:wrap}
-.row>*{flex:1;min-width:120px}
-.project{
- padding:12px;background:#242532;
- border-radius:10px;margin:8px 0
-}
-footer{text-align:center;color:#777;font-size:12px;padding:25px}
-a{color:#ff8bb7}
-@media(max-width:500px){
- .container{padding:12px}
- .panel{padding:14px}
- .tab{font-size:11px;padding:11px 2px}
-}
+*{box-sizing:border-box}
+body{margin:0;background:#101116;color:#fff;font-family:Arial,sans-serif}
+header{background:#191a23;padding:18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0}
+.logo{font-size:23px;font-weight:bold;color:#ff5c9a}
+.logo span{color:white}
+main{max-width:900px;margin:auto;padding:15px}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:12px 0}
+button{border:0;border-radius:9px;padding:12px;background:#805eea;color:white;font-weight:bold;cursor:pointer;margin:4px 2px}
+.tab{background:#252633;font-size:12px;padding:12px 3px}
+.tab.active{background:#805eea}
+.panel{background:#191a23;border:1px solid #30313c;border-radius:14px;padding:16px;margin:14px 0}
+.section{display:none}.section.active{display:block}
+h2{font-size:20px;margin-top:0}
+p{color:#aaa;font-size:13px;line-height:1.5}
+input,select{width:100%;padding:13px;margin:8px 0;background:#101116;color:white;border:1px solid #414250;border-radius:8px}
+video{width:100%;max-height:360px;border-radius:10px}
+.preview{background:#0b0c10;border:1px dashed #444;padding:12px;border-radius:10px;margin:12px 0;text-align:center}
+.status{white-space:pre-wrap;background:#252633;padding:12px;border-radius:9px;font-size:13px;line-height:1.5;margin:12px 0}
+.clip,.project{background:#252633;padding:13px;border-radius:9px;margin:10px 0}
+.clip input{width:auto}
+.clip p{margin-bottom:0}
+.row{display:flex;gap:10px}
+.row>div{flex:1;min-width:0}
+.secondary{background:#353644}
+button:disabled{opacity:.5}
+iframe{width:100%;height:230px;border:0;border-radius:10px}
+@media(max-width:480px){main{padding:10px}.panel{padding:13px}.tab{font-size:10px}}
 </style>
 </head>
-
 <body>
-
 <header>
  <div class="logo">Clip<span>Cutter</span> ✂️</div>
- <div style="font-size:12px;color:#aaa">AI Video Studio</div>
+ <small>AI Video Studio</small>
 </header>
 
-<div class="container">
-
+<main>
 <div class="tabs">
  <button class="tab active" data-tab="home">Home</button>
  <button class="tab" data-tab="auto">AI Clipping</button>
  <button class="tab" data-tab="manual">Manual Editor</button>
- <button class="tab" data-tab="projects">My Projects</button>
+ <button class="tab" data-tab="projects">Projects</button>
 </div>
 
-<!-- HOME -->
-<section class="section active" id="home">
-
+<section id="home" class="section active">
  <div class="panel">
-  <h2>Welcome to ClipCutter ✨</h2>
-  <p>Turn your long videos into short clips for YouTube Shorts, Instagram Reels and more.</p>
-  <br>
+  <h2>Welcome to ClipCutter</h2>
+  <p>Turn your videos into short clips for Shorts and Reels.</p>
   <button onclick="showTab('auto')">Start AI Clipping</button>
   <button class="secondary" onclick="showTab('manual')">Manual Editor</button>
  </div>
-
  <div class="panel">
-  <h3>Import your video</h3>
-  <p>Upload a video file that you own or have permission to edit.</p>
+  <h3>Upload your video</h3>
   <input type="file" id="homeFile" accept="video/*">
   <button onclick="loadHomeVideo()">Import Video</button>
-  <div id="homePreview" class="video-box">
-   <p>Video preview will appear here.</p>
-  </div>
+  <div class="preview" id="homePreview">Video preview</div>
  </div>
-
  <div class="panel">
   <h3>YouTube Preview</h3>
-  <p>Preview a public YouTube video. A YouTube preview cannot be used as a downloadable source file for clipping.</p>
-  <input id="youtubeUrl" placeholder="Paste YouTube video URL">
-  <button onclick="previewYouTube()">Preview YouTube</button>
-  <div id="youtubePreview" class="video-box">
-   <p>YouTube preview will appear here.</p>
-  </div>
+  <p>YouTube preview is for viewing only. Upload your original video file to edit it.</p>
+  <input id="youtubeUrl" placeholder="Paste YouTube URL">
+  <button onclick="previewYouTube()">Preview</button>
+  <div class="preview" id="youtubePreview">YouTube preview</div>
  </div>
-
 </section>
 
-<!-- AI CLIPPING -->
-<section class="section" id="auto">
-
+<section id="auto" class="section">
  <div class="panel">
-  <h2>✨ Automatic AI Clipping</h2>
-  <p>Upload your original video. AI will analyze it and suggest interesting clip timestamps.</p>
-
+  <h2>AI Automatic Clipping</h2>
+  <p>Upload a video you own or have permission to edit. AI will analyze it and suggest highlights.</p>
   <input type="file" id="aiFile" accept="video/*">
-
-  <label>Video format</label>
+  <label>Output format</label>
   <select id="aiFormat">
-   <option value="9:16">9:16 - Reels / Shorts</option>
-   <option value="16:9">16:9 - YouTube</option>
-   <option value="1:1">1:1 - Square</option>
+   <option value="9:16">9:16 Reels / Shorts</option>
+   <option value="16:9">16:9 YouTube</option>
+   <option value="1:1">1:1 Square</option>
   </select>
-
-  <button onclick="analyzeVideo()" id="analyzeBtn">Find Highlights with AI</button>
-
-  <div id="aiPreview" class="video-box">
-   <p>Your uploaded video preview will appear here.</p>
-  </div>
-
-  <div id="aiStatus" class="status">Waiting for video upload.</div>
+  <div class="preview" id="aiPreview">Video preview</div>
+  <button id="analyzeBtn" onclick="analyzeVideo()">Find Highlights with AI</button>
+  <div class="status" id="aiStatus">Upload a video to begin.</div>
  </div>
-
  <div class="panel">
-  <h3>AI Suggested Clips</h3>
-  <div id="clipsList">
-   <p>No clips generated yet.</p>
-  </div>
-  <button onclick="downloadClips()" id="downloadClipsBtn" disabled>Export Selected Clips ZIP</button>
+  <h3>Suggested Clips</h3>
+  <div id="clipsList"><p>No clips generated yet.</p></div>
+  <button id="exportBtn" onclick="exportClips()" disabled>Export Selected Clips ZIP</button>
  </div>
-
 </section>
 
-<!-- MANUAL EDITOR -->
-<section class="section" id="manual">
-
+<section id="manual" class="section">
  <div class="panel">
-  <h2>🎬 Manual Video Editor</h2>
-  <p>Upload your video and choose the start and end time.</p>
-
+  <h2>Manual Video Editor</h2>
   <input type="file" id="manualFile" accept="video/*">
-
-  <div id="manualPreview" class="video-box">
-   <p>Video preview will appear here.</p>
-  </div>
-
+  <div class="preview" id="manualPreview">Video preview</div>
   <div class="row">
-   <div>
-    <label>Start time (seconds)</label>
-    <input type="number" id="startTime" value="0" min="0" step="0.1">
-   </div>
-   <div>
-    <label>End time (seconds)</label>
-    <input type="number" id="endTime" value="15" min="0" step="0.1">
-   </div>
+   <div><label>Start (seconds)</label><input type="number" id="startTime" min="0" value="0" step="0.1"></div>
+   <div><label>End (seconds)</label><input type="number" id="endTime" min="0" value="15" step="0.1"></div>
   </div>
-
-  <button onclick="trimVideo()" id="trimBtn">Export Trimmed MP4</button>
-  <div id="manualStatus" class="status">Upload a video to begin.</div>
+  <button id="trimBtn" onclick="trimVideo()">Export MP4</button>
+  <div class="status" id="manualStatus">Upload a video to begin.</div>
  </div>
-
 </section>
 
-<!-- PROJECTS -->
-<section class="section" id="projects">
-
+<section id="projects" class="section">
  <div class="panel">
-  <h2>📁 My Projects</h2>
-  <p>Your recent project records on this device.</p>
+  <h2>My Projects</h2>
   <div id="projectList"></div>
-  <button class="secondary" onclick="clearProjects()">Clear Project History</button>
+  <button class="secondary" onclick="clearProjects()">Clear History</button>
  </div>
-
 </section>
-
-</div>
-
-<footer>
- ClipCutter • AI Video Studio
-</footer>
+</main>
 
 <script>
-const API = "https://clipcutter-backend-1duq.onrender.com";
+const API="https://clipcutter-backend-1duq.onrender.com";
+let aiClips=[];
+let homeFile=null;
+let manualFile=null;
 
-let homeVideo = null;
-let aiVideo = null;
-let manualVideo = null;
-let aiClips = [];
-let objectUrls = [];
-
-function showTab(tabName){
- document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
- document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
-
- document.getElementById(tabName).classList.add("active");
- document.querySelector('[data-tab="'+tabName+'"]').classList.add("active");
-
- if(tabName==="projects") renderProjects();
+function showTab(name){
+ document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));
+ document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+ document.getElementById(name).classList.add("active");
+ document.querySelector('[data-tab="'+name+'"]').classList.add("active");
+ if(name==="projects")renderProjects();
 }
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
 
-document.querySelectorAll(".tab").forEach(btn=>{
- btn.addEventListener("click",()=>showTab(btn.dataset.tab));
-});
-
+function escapeHTML(s){
+ return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
 function saveProject(name){
- let projects=JSON.parse(localStorage.getItem("clipcutterProjects")||"[]");
- projects.unshift({
-  name:name,
-  date:new Date().toLocaleString()
- });
- localStorage.setItem("clipcutterProjects",JSON.stringify(projects.slice(0,50)));
+ let a=JSON.parse(localStorage.getItem("ccProjects")||"[]");
+ a.unshift({name,date:new Date().toLocaleString()});
+ localStorage.setItem("ccProjects",JSON.stringify(a.slice(0,40)));
 }
-
 function renderProjects(){
- let projects=JSON.parse(localStorage.getItem("clipcutterProjects")||"[]");
- let box=document.getElementById("projectList");
-
- if(!projects.length){
-  box.innerHTML="<p>No projects yet.</p>";
-  return;
- }
-
- box.innerHTML=projects.map(p=>
-  `<div class="project"><strong>${escapeHTML(p.name)}</strong><br><small>${escapeHTML(p.date)}</small></div>`
- ).join("");
+ let a=JSON.parse(localStorage.getItem("ccProjects")||"[]");
+ document.getElementById("projectList").innerHTML=a.length?
+ a.map(p=>`<div class="project"><b>${escapeHTML(p.name)}</b><p>${escapeHTML(p.date)}</p></div>`).join(""):"<p>No projects yet.</p>";
 }
-
 function clearProjects(){
- if(!confirm("Clear project history from this device?")) return;
- localStorage.removeItem("clipcutterProjects");
- renderProjects();
+ localStorage.removeItem("ccProjects");renderProjects();
 }
-
-function escapeHTML(value){
- return String(value).replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
+function previewFile(file,id){
+ let url=URL.createObjectURL(file);
+ document.getElementById(id).innerHTML=`<video controls src="${url}"></video>`;
 }
-
-function setVideoPreview(file,elementId){
- if(!file) return;
- const url=URL.createObjectURL(file);
- objectUrls.push(url);
- document.getElementById(elementId).innerHTML=
-  `<video controls src="${url}"></video>`;
-}
-
 function loadHomeVideo(){
- const file=document.getElementById("homeFile").files[0];
- if(!file) return alert("Please select a video first.");
- homeVideo=file;
- setVideoPreview(file,"homePreview");
- saveProject("Imported video: "+file.name);
+ homeFile=document.getElementById("homeFile").files[0];
+ if(!homeFile)return alert("Select a video first.");
+ previewFile(homeFile,"homePreview");
+ saveProject("Imported: "+homeFile.name);
 }
-
-document.getElementById("aiFile").addEventListener("change",function(){
- aiVideo=this.files[0];
- if(aiVideo){
-  setVideoPreview(aiVideo,"aiPreview");
-  document.getElementById("aiStatus").textContent="Video ready: "+aiVideo.name;
- }
+document.getElementById("aiFile").addEventListener("change",e=>{
+ let f=e.target.files[0];
+ if(f)previewFile(f,"aiPreview");
 });
-
-document.getElementById("manualFile").addEventListener("change",function(){
- manualVideo=this.files[0];
- if(manualVideo){
-  setVideoPreview(manualVideo,"manualPreview");
-  document.getElementById("manualStatus").textContent="Video ready: "+manualVideo.name;
- }
+document.getElementById("manualFile").addEventListener("change",e=>{
+ manualFile=e.target.files[0];
+ if(manualFile)previewFile(manualFile,"manualPreview");
 });
-
 function previewYouTube(){
- const input=document.getElementById("youtubeUrl").value.trim();
- const box=document.getElementById("youtubePreview");
-
- let id=null;
+ let raw=document.getElementById("youtubeUrl").value.trim(),id="";
  try{
-  const url=new URL(input);
-  if(url.hostname==="youtu.be"){
-   id=url.pathname.slice(1);
-  }else if(url.hostname.includes("youtube.com")){
-   id=url.searchParams.get("v");
-   if(!id && url.pathname.startsWith("/shorts/")){
-    id=url.pathname.split("/")[2];
-   }
-   if(!id && url.pathname.startsWith("/embed/")){
-    id=url.pathname.split("/")[2];
-   }
-  }
+  let u=new URL(raw);
+  if(u.hostname==="youtu.be")id=u.pathname.slice(1);
+  else if(u.hostname.includes("youtube.com"))id=u.searchParams.get("v")||u.pathname.split("/")[2];
  }catch(e){}
-
- if(!id || !/^[a-zA-Z0-9_-]{11}$/.test(id)){
-  box.innerHTML="<p>Valid YouTube video URL enter karein.</p>";
+ if(!/^[\w-]{11}$/.test(id)){
+  document.getElementById("youtubePreview").textContent="Enter a valid YouTube URL.";
   return;
  }
-
- box.innerHTML=
-  `<iframe width="100%" height="230"
-  src="https://www.youtube-nocookie.com/embed/${id}"
-  title="YouTube preview" frameborder="0"
-  allowfullscreen></iframe>
-  <p>YouTube preview only. Upload the original video file for editing.</p>`;
+ document.getElementById("youtubePreview").innerHTML=
+ `<iframe src="https://www.youtube-nocookie.com/embed/${id}" allowfullscreen></iframe>`;
 }
 
 async function analyzeVideo(){
@@ -350,202 +185,107 @@ async function analyzeVideo(){
  const status=document.getElementById("aiStatus");
  const btn=document.getElementById("analyzeBtn");
  const list=document.getElementById("clipsList");
-
- if(!file){
-  status.textContent="Please upload a video first.";
-  return;
- }
-
- if(!file.type.startsWith("video/")){
-  status.textContent="Please select a valid video file.";
-  return;
- }
-
- if(file.size>100*1024*1024){
-  status.textContent="File is larger than the 100 MB upload limit.";
-  return;
- }
+ if(!file){status.textContent="Please upload a video first.";return;}
+ if(!file.type.startsWith("video/")){status.textContent="Select a valid video.";return;}
+ if(file.size>100*1024*1024){status.textContent="Maximum upload size is 100 MB.";return;}
 
  btn.disabled=true;
+ document.getElementById("exportBtn").disabled=true;
  list.innerHTML="";
- document.getElementById("downloadClipsBtn").disabled=true;
- status.textContent="Uploading video for AI analysis. Please wait...";
+ status.textContent="Uploading video to AI backend. Please wait...";
 
  try{
   const form=new FormData();
   form.append("video",file);
   form.append("format",document.getElementById("aiFormat").value);
-
-  const response=await fetch(API+"/api/analyze",{
-   method:"POST",
-   body:form
-  });
-
+  const response=await fetch(API+"/api/analyze",{method:"POST",body:form});
   const data=await response.json();
-
-  if(!response.ok){
-   throw new Error(data.error||data.message||"AI analysis failed.");
-  }
-
-  aiClips=data.clips||[];
-
+  if(!response.ok)throw new Error(data.error||data.message||"Backend analysis failed.");
+  aiClips=Array.isArray(data.clips)?data.clips:[];
   if(!aiClips.length){
-   status.textContent="Analysis completed, but no clips were returned. Try another video.";
-   list.innerHTML="<p>No suggested clips found.</p>";
+   status.textContent="Backend responded, but no clips were returned. Check the backend response and logs.";
    return;
   }
-
-  status.textContent="AI analysis completed. Select the clips you want to export.";
-  list.innerHTML=aiClips.map((clip,index)=>`
+  list.innerHTML=aiClips.map((c,i)=>`
    <div class="clip">
-    <label>
-     <input type="checkbox" class="clipCheck" value="${index}" checked>
-     <strong>${escapeHTML(clip.title||"Highlight "+(index+1))}</strong>
-    </label>
-    <small>${Number(clip.start).toFixed(1)}s - ${Number(clip.end).toFixed(1)}s</small>
-    <p>${escapeHTML(clip.reason||"AI suggested highlight")}</p>
-   </div>
-  `).join("");
-
-  document.getElementById("downloadClipsBtn").disabled=false;
-  saveProject("AI clips: "+file.name);
-
- }catch(error){
-  status.textContent="Error: "+error.message+
-   "\nCheck backend logs and try again with a smaller video.";
+    <label><input type="checkbox" class="clipCheck" value="${i}" checked>
+    <b>${escapeHTML(c.title||"Highlight "+(i+1))}</b></label>
+    <p>${Number(c.start).toFixed(1)}s – ${Number(c.end).toFixed(1)}s</p>
+    <p>${escapeHTML(c.reason||"AI suggested highlight")}</p>
+   </div>`).join("");
+  status.textContent="AI analysis completed. Select clips and export.";
+  document.getElementById("exportBtn").disabled=false;
+  saveProject("AI analysis: "+file.name);
+ }catch(err){
+  status.textContent="AI ERROR: "+err.message+
+  "\n\nIf the backend is waking up, wait a little and retry. If it repeats, check Render logs.";
  }finally{
   btn.disabled=false;
  }
 }
 
-async function downloadClips(){
+async function exportClips(){
  const file=document.getElementById("aiFile").files[0];
  const status=document.getElementById("aiStatus");
-
- if(!file || !aiClips.length){
-  status.textContent="Please analyze a video first.";
-  return;
- }
-
- const selected=[...document.querySelectorAll(".clipCheck:checked")]
-  .map(el=>aiClips[Number(el.value)]);
-
- if(!selected.length){
-  status.textContent="Select at least one clip.";
-  return;
- }
-
- const btn=document.getElementById("downloadClipsBtn");
+ const selected=[...document.querySelectorAll(".clipCheck:checked")].map(x=>aiClips[Number(x.value)]);
+ if(!file||!selected.length){status.textContent="Select at least one clip.";return;}
+ const btn=document.getElementById("exportBtn");
  btn.disabled=true;
- status.textContent="Creating your clips. Please wait...";
-
+ status.textContent="Creating selected clips...";
  try{
   const form=new FormData();
   form.append("video",file);
   form.append("clips",JSON.stringify(selected));
-
-  const response=await fetch(API+"/api/create-clips",{
-   method:"POST",
-   body:form
-  });
-
-  if(!response.ok){
-   let message="Could not create clips.";
-   try{
-    const data=await response.json();
-    message=data.error||data.message||message;
-   }catch(e){}
-   throw new Error(message);
+  const r=await fetch(API+"/api/create-clips",{method:"POST",body:form});
+  if(!r.ok){
+   let msg="Clip export failed.";
+   try{let d=await r.json();msg=d.error||d.message||msg;}catch(e){}
+   throw new Error(msg);
   }
-
-  const blob=await response.blob();
+  const blob=await r.blob();
   const url=URL.createObjectURL(blob);
-  objectUrls.push(url);
-
   const a=document.createElement("a");
-  a.href=url;
-  a.download="ClipCutter-clips.zip";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-
-  status.textContent="Clip export response received. Check your downloads.";
- }catch(error){
-  status.textContent="Export error: "+error.message;
- }finally{
-  btn.disabled=false;
- }
+  a.href=url;a.download="ClipCutter-clips.zip";a.click();
+  URL.revokeObjectURL(url);
+  status.textContent="Export response received. Check your Downloads folder.";
+ }catch(err){status.textContent="EXPORT ERROR: "+err.message;}
+ finally{btn.disabled=false;}
 }
 
 async function trimVideo(){
  const file=document.getElementById("manualFile").files[0];
  const status=document.getElementById("manualStatus");
- const btn=document.getElementById("trimBtn");
-
- if(!file){
-  status.textContent="Please upload a video first.";
-  return;
- }
-
+ if(!file){status.textContent="Upload a video first.";return;}
  const start=Number(document.getElementById("startTime").value);
  const end=Number(document.getElementById("endTime").value);
-
  if(!Number.isFinite(start)||!Number.isFinite(end)||start<0||end<=start){
-  status.textContent="Please enter valid start and end times.";
-  return;
+  status.textContent="Enter valid start and end times.";return;
  }
-
- if(file.size>100*1024*1024){
-  status.textContent="File is larger than the 100 MB upload limit.";
-  return;
- }
-
- btn.disabled=true;
- status.textContent="Trimming video. Please wait...";
-
+ if(file.size>100*1024*1024){status.textContent="Maximum upload size is 100 MB.";return;}
+ const btn=document.getElementById("trimBtn");
+ btn.disabled=true;status.textContent="Trimming video...";
  try{
   const form=new FormData();
   form.append("video",file);
   form.append("start",String(start));
   form.append("end",String(end));
-
-  const response=await fetch(API+"/api/trim",{
-   method:"POST",
-   body:form
-  });
-
-  if(!response.ok){
-   let message="Video trimming failed.";
-   try{
-    const data=await response.json();
-    message=data.error||data.message||message;
-   }catch(e){}
-   throw new Error(message);
+  const r=await fetch(API+"/api/trim",{method:"POST",body:form});
+  if(!r.ok){
+   let msg="Trim failed.";
+   try{let d=await r.json();msg=d.error||d.message||msg;}catch(e){}
+   throw new Error(msg);
   }
-
-  const blob=await response.blob();
+  const blob=await r.blob();
   const url=URL.createObjectURL(blob);
-  objectUrls.push(url);
-
   const a=document.createElement("a");
-  a.href=url;
-  a.download="ClipCutter-trimmed.mp4";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-
-  status.textContent="Trim export response received. Check your downloads.";
+  a.href=url;a.download="ClipCutter-trimmed.mp4";a.click();
+  URL.revokeObjectURL(url);
+  status.textContent="Export response received. Check Downloads.";
   saveProject("Manual trim: "+file.name);
-
- }catch(error){
-  status.textContent="Error: "+error.message;
- }finally{
-  btn.disabled=false;
- }
+ }catch(err){status.textContent="TRIM ERROR: "+err.message;}
+ finally{btn.disabled=false;}
 }
-
 renderProjects();
 </script>
-
 </body>
 </html>
